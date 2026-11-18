@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUPERNOVA.crm · O CRM com a cara da sua empresa</title>
+<meta name="description" content="Conversas, funil de vendas, documentos e cobrança num lugar só, com a sua marca. WhatsApp pela API oficial da Meta, com IA e equipe no mesmo atendimento.">
+<meta name="theme-color" content="#44337a">
+<meta property="og:title" content="SUPERNOVA.crm · O CRM com a cara da sua empresa">
+<meta property="og:description" content="Conversas, funil de vendas, documentos e cobrança num lugar só, com a sua marca.">
+<meta property="og:image" content="assets/telas/capa-oportunidades.webp">
+<link rel="icon" href="assets/supernova-roxo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/telas/capa-oportunidades.webp">
+<style>
+:root{
+  --janela:#f5f5f7; --grupo:#fff; --tinta:#1d1d1f; --tinta-2:#6e6e73; --tinta-3:#6a6a70;
+  --fio:#e3e3e8;
+  --roxo:#7c3aed; --roxo-escuro:#553c9a; --roxo-fundo:#44337a; --roxo-claro:#f1eafe;
+  --antes:#e9e9ee; --antes-tinta:#6a6a70; --antes-fio:#d4d4da;
+  --sombra:0 0 0 .5px rgb(0 0 0/.08),0 1px 2px rgb(0 0 0/.05),0 12px 32px -16px rgb(30 20 70/.25);
+  --sombra-janela:0 0 0 .5px rgb(0 0 0/.1),0 2px 6px rgb(30 20 70/.08),0 40px 90px -30px rgb(30 15 80/.55);
+  --mola:cubic-bezier(.34,1.56,.64,1); --sai:cubic-bezier(.16,1,.3,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:88px;scrollbar-color:#c9c2dc var(--janela)}
+body{font-family:Geist,ui-sans-serif,system-ui,sans-serif;font-feature-settings:"cv11","ss01";background:var(--janela);color:var(--tinta);font-size:17px;line-height:1.55;letter-spacing:-.011em;overflow-x:hidden;-webkit-font-smoothing:antialiased;caret-color:var(--roxo)}
+::selection{background:#ddd0fb;color:#2e1065}
+::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--janela)}::-webkit-scrollbar-thumb{background:#c9c2dc;border-radius:99px;border:3px solid var(--janela)}::-webkit-scrollbar-thumb:hover{background:#a99bd0}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--roxo);outline-offset:3px;border-radius:8px}
+.icone{width:1.1em;height:1.1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.faixa{width:min(1240px,100% - 48px);margin-inline:auto}
+@media (max-width:640px){.faixa{width:calc(100% - 32px)}}
+
+/* botões: pílula, mola */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 26px;border-radius:999px;font-weight:600;font-size:17px;letter-spacing:-.015em;white-space:nowrap;transition:transform .45s var(--mola),background-color .2s,box-shadow .3s}
+.btn:active{transform:scale(.97)}
+.btn-branco{background:#fff;color:var(--roxo-escuro);box-shadow:0 10px 30px -10px rgb(20 0 60/.55)}
+.btn-branco:hover{box-shadow:0 14px 36px -10px rgb(20 0 60/.7);transform:translateY(-1px)}
+.btn-roxo{background:var(--roxo);color:#fff;box-shadow:0 10px 26px -12px rgb(124 58 237/.8)}
+.btn-roxo:hover{background:#6d28d9}
+.btn-p{height:38px;padding:0 16px;font-size:15px}
+.link-seta{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#fff;padding:12px 2px;border-bottom:1px solid rgb(255 255 255/.35);transition:border-color .2s}
+.link-seta:hover{border-color:#fff}
+
+/* navegação: a única camada de vidro */
+.nav{position:fixed;z-index:40;top:14px;left:50%;translate:-50% 0;width:min(1240px,100% - 28px);height:60px;display:flex;align-items:center;gap:20px;padding:0 10px 0 22px;border-radius:999px;color:#fff;transition:color .35s}
+.nav::before{content:"";position:absolute;inset:0;border-radius:inherit;background:rgb(255 255 255/.1);backdrop-filter:saturate(170%) blur(22px);-webkit-backdrop-filter:saturate(170%) blur(22px);box-shadow:inset 0 0 0 1px rgb(255 255 255/.18);z-index:-1;transition:background-color .35s,box-shadow .35s}
+.nav.solida{color:var(--tinta)}
+.nav.solida::before{background:rgb(250 250 252/.8);box-shadow:inset 0 0 0 .5px rgb(255 255 255/.8),var(--sombra)}
+.nav ul{display:flex;gap:2px;list-style:none;margin-left:-10px}
+.nav .btn{margin-left:auto}
+.nav ul a{display:block;padding:8px 14px;border-radius:999px;font-size:15px;font-weight:500;transition:background-color .2s}
+.nav ul a:hover{background:rgb(120 120 128/.16)}
+@media (max-width:820px){.nav ul{display:none}}
+@media (max-width:400px){.nav{padding-left:16px}.nav .btn{padding:0 13px;font-size:14px}}
+
+/* ondas da marca */
+.ondas{position:absolute;inset:0;z-index:-1;overflow:hidden;background:var(--roxo-fundo)}
+.ondas .onda{position:absolute;inset:0;width:100%;height:100%;animation:onda 2s ease-in-out infinite alternate;will-change:transform}
+@keyframes onda{to{transform:translate3d(5%,0,0)}}
+
+/* primeira dobra */
+.capa{position:relative;isolation:isolate;min-height:100svh;color:#fff;overflow:hidden;display:flex;align-items:center;padding:120px 0 64px}
+.capa-grade{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:center}
+.capa h1{font-size:clamp(44px,5.6vw,86px);line-height:.98;letter-spacing:-.04em;font-weight:800;text-wrap:balance;max-width:11ch}
+.capa .apoio{font-size:clamp(18px,1.5vw,21px);line-height:1.45;color:rgb(255 255 255/.9);margin-top:26px;max-width:34ch;text-wrap:pretty}
+.capa .acoes{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:38px}
+.palco{position:relative;aspect-ratio:7/5;width:100%}
+.celular{position:absolute;left:0;top:2%;width:31%;aspect-ratio:71.5/150;border-radius:17% / 8.1%;padding:1.15%;background:linear-gradient(140deg,#d6bcfa 0%,#7c3aed 24%,#b794f4 50%,#553c9a 76%,#9f7aea 100%);box-shadow:inset 0 0 0 1px rgb(255 255 255/.55),inset 0 0 0 2px rgb(0 0 0/.18),0 34px 70px -24px rgb(10 0 40/.65);rotate:-9deg;animation:celular 1.1s var(--sai) both}
+.celular .bt{position:absolute;width:1.6%;border-radius:2px;background:linear-gradient(90deg,#553c9a,#b794f4 60%,#7c3aed)}
+.celular .bt-acao{left:-1.2%;top:16%;height:4.5%}.celular .bt-vol1{left:-1.2%;top:24%;height:8%}.celular .bt-vol2{left:-1.2%;top:34%;height:8%}
+.celular .bt-lig{right:-1.2%;top:27%;height:12%;background:linear-gradient(270deg,#553c9a,#b794f4 60%,#7c3aed)}
+.celular .bt-cam{right:-1.2%;top:58%;height:7%;background:linear-gradient(270deg,#553c9a,#b794f4 60%,#7c3aed)}
+.celular-borda{height:100%;padding:2.6%;border-radius:16% / 7.6%;background:#09090b}
+.celular-tela{position:relative;height:100%;border-radius:13.5% / 6.4%;background:#fff;overflow:hidden;display:flex;flex-direction:column;container-type:inline-size}
+.cel-ilha{position:absolute;top:3.4cqw;left:50%;translate:-50% 0;width:29cqw;height:8.6cqw;border-radius:99px;background:#09090b;z-index:3}
+/* tela do celular: lista de conversas no estilo do WhatsApp para iPhone (contatos fictícios) */
+.wa{background:#fff;color:#111;font-family:-apple-system,"SF Pro Text",Geist,system-ui,sans-serif;letter-spacing:-.01em}
+.wa svg{display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wa-status{display:flex;justify-content:space-between;align-items:center;height:15cqw;padding:1.2cqw 8cqw 0 11.5cqw;font-size:5.6cqw;font-weight:700}
+.wa-ind{display:flex;align-items:center;gap:1.6cqw}
+.wa-ind svg{height:3.6cqw;width:auto}
+.wa-bat{display:inline-grid;place-items:center;min-width:7.6cqw;height:3.9cqw;border-radius:1.2cqw;background:#111;color:#fff;font-size:3cqw;font-weight:800;position:relative;margin-right:.8cqw}
+.wa-bat::after{content:"";position:absolute;right:-1cqw;top:1.2cqw;width:.6cqw;height:1.5cqw;border-radius:0 .4cqw .4cqw 0;background:#9a9a9f}
+.wa-acoes{display:flex;justify-content:space-between;padding:1cqw 4.4cqw 0}
+.wa-acoes div{display:flex;gap:2.4cqw}
+.wa-bt{width:9.6cqw;height:9.6cqw;border-radius:50%;background:#f3f3f5;display:grid;place-items:center;box-shadow:0 .6cqw 1.6cqw rgb(0 0 0/.08)}
+.wa-bt svg{width:4.6cqw;height:4.6cqw}
+.wa-bt.verde{background:#1fa855;color:#fff}
+.wa-chips{display:flex;gap:1.6cqw;padding:3.4cqw 4.4cqw 2.4cqw;border-bottom:1px solid #ececef;white-space:nowrap;overflow:hidden}
+.wa-chips span{border:1px solid #d6d6da;border-radius:99px;padding:.9cqw 2.6cqw;font-size:3.9cqw;font-weight:600;color:#555}
+.wa-chips span:first-child{background:#d9f7de;border-color:#a6e3b2;color:#0d5c26}
+.wa-chips em{font-style:normal;color:#8a8a8e;font-weight:500}
+.wa-lista{list-style:none}
+.wa-lista li{display:grid;grid-template-columns:11.6cqw 1fr;gap:3cqw;align-items:center;padding:2.3cqw 4.4cqw 0}
+.wa-lista li>div{border-bottom:1px solid #ececef;padding-bottom:2.3cqw;min-width:0}
+.wa-av{width:11.6cqw;height:11.6cqw;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:4.2cqw;font-weight:700;font-style:normal}
+.wa-l{display:flex;justify-content:space-between;align-items:baseline;gap:2cqw}
+.wa-l b{font-size:4.6cqw;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-l time{font-size:3.6cqw;color:#8a8a8e;flex:none}
+.wa-l time.nova{color:#1fa855;font-weight:600}
+.wa-l span{font-size:4cqw;color:#6b6b70;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:1cqw;min-width:0}
+.wa-l span svg{width:4.4cqw;height:3cqw;color:#53bdeb;flex:none}
+.wa-l em{font-style:normal;flex:none;min-width:5.2cqw;height:5.2cqw;border-radius:99px;background:#1fa855;color:#fff;font-size:3.2cqw;font-weight:700;display:grid;place-items:center;padding:0 1.2cqw}
+.wa-tab{position:absolute;left:3.2cqw;right:3.2cqw;bottom:3.4cqw;height:15.5cqw;border-radius:99px;background:rgb(250 250 252/.94);box-shadow:0 1cqw 4cqw rgb(0 0 0/.14),0 0 0 1px rgb(0 0 0/.04);display:grid;grid-template-columns:repeat(5,1fr);align-items:center;padding:0 1.4cqw}
+.wa-tab span{position:relative;display:flex;flex-direction:column;align-items:center;gap:.6cqw;font-size:2.5cqw;font-weight:600;color:#222}
+.wa-tab span svg{width:5.4cqw;height:5.4cqw}
+.wa-tab span.on{background:#ececef;border-radius:99px;padding:1.4cqw 0}
+.wa-tab em{position:absolute;top:-1.4cqw;left:55%;font-style:normal;background:#1fa855;color:#fff;font-size:2.6cqw;font-weight:700;border-radius:99px;min-width:4.2cqw;padding:0 .9cqw;text-align:center;line-height:4.2cqw}
+.wa-lista li{background:#fff}
+.wa-lista li.chegou{animation:wa-chega 1.2s ease-out}
+.wa-lista li.chegou em{animation:wa-pula .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes wa-chega{from{background:#e9f9ee}to{background:#fff}}
+@keyframes wa-pula{0%{scale:.4}100%{scale:1}}
+.wa-tab i.eu{width:5.6cqw;height:5.6cqw;border-radius:50%;background:#c58b5a;display:block}
+.janela{position:absolute;right:0;bottom:0;width:86%;border-radius:12px;overflow:hidden;background:var(--grupo);box-shadow:var(--sombra-janela);animation:janela 1.2s .25s var(--sai) both}
+.janela-barra{height:30px;display:flex;align-items:center;gap:7px;padding:0 12px;background:#fbfbfd;border-bottom:1px solid var(--fio)}
+.janela-barra i{width:10px;height:10px;border-radius:50%;display:block}
+.janela-barra span{margin:0 auto;font-size:11px;color:#5e5e63;background:#efeff3;border-radius:99px;padding:2px 14px;transform:translateX(-14px)}
+.telas{position:relative;aspect-ratio:1920/918;background:#fff;overflow:hidden}
+.telas>.t,.telas>.abertura{position:absolute;inset:0;width:100%;height:100%;opacity:0;translate:0 8px;scale:.995;transition:opacity .28s cubic-bezier(.32,.72,0,1),translate .28s cubic-bezier(.32,.72,0,1),scale .28s cubic-bezier(.32,.72,0,1)}
+.telas>.on{opacity:1;translate:0 0;scale:1}
+.telas>.abertura{transition-duration:.6s}
+.cursor-fake{position:absolute;z-index:5;left:50%;top:110%;width:2.4cqw;pointer-events:none;transition:left .75s cubic-bezier(.45,0,.2,1),top .75s cubic-bezier(.45,0,.2,1);filter:drop-shadow(0 .25cqw .4cqw rgb(0 0 0/.35))}
+.cursor-fake svg{display:block;width:100%;height:auto;fill:#111;stroke:#fff;stroke-width:1.4;stroke-linejoin:round;transition:scale .12s}
+.cursor-fake.clica svg{scale:.86}
+.cursor-fake i{position:absolute;left:-1.6cqw;top:-1.6cqw;width:3.2cqw;height:3.2cqw;border-radius:50%;background:rgb(124 58 237/.35);scale:0;opacity:0}
+.cursor-fake.clica i{animation:clique .45s cubic-bezier(.16,1,.3,1)}
+@keyframes clique{from{scale:.2;opacity:1}to{scale:1.4;opacity:0}}
+.telas{container-type:inline-size}
+.abertura{background:#1a0b3d;display:grid;place-items:center;transition-duration:.6s;overflow:hidden}
+.universo,.universo-surge,.universo svg,.viagem{position:absolute;inset:0;width:100%;height:100%}
+.universo-surge{background:radial-gradient(ellipse at 50% 50%,#44337a 0%,#2d1a5e 35%,#1a0b3d 70%,#0f0626 100%);animation:universo-surge 1.6s ease-out backwards}
+.estrelas-em-viagem{animation-name:viagem-pelo-universo;animation-timing-function:cubic-bezier(.55,0,1,.45);animation-iteration-count:infinite;transform-origin:50% 50%;will-change:transform,opacity}
+.galaxia-gira{animation:galaxia-gira linear infinite;transform-origin:0 0}
+.ceu-que-pisca{animation:ceu-pisca 6s ease-in-out infinite alternate}
+.ceu-deriva{animation-name:ceu-deriva;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes universo-surge{from{opacity:0}to{opacity:1}}
+@keyframes ceu-deriva{0%{transform:translate(0,0)}50%{transform:translate(9px,-6px)}100%{transform:translate(-7px,8px)}}
+@keyframes viagem-pelo-universo{0%{transform:scale(.3);opacity:0}20%{opacity:1}85%{opacity:1}100%{transform:scale(3);opacity:0}}
+@keyframes galaxia-gira{to{transform:rotate(360deg)}}
+@keyframes ceu-pisca{from{opacity:.55}to{opacity:1}}
+.login-col{position:relative;display:flex;flex-direction:column;align-items:center;gap:2.6cqw;width:100%}
+.logo-alvo{width:34cqw!important}
+.login-cartao{width:36cqw;padding:2.8cqw 3cqw 3cqw;border-radius:2.8cqw;background:rgb(244 242 250/.9);border:1px solid rgb(255 255 255/.6);box-shadow:inset 0 1px 0 rgb(255 255 255/.8),0 2cqw 5cqw -1cqw rgb(5 0 25/.6);backdrop-filter:blur(20px) saturate(180%);color:#1d1d1f;opacity:0;translate:0 2cqw;transition:opacity .6s var(--sai),translate .8s var(--sai)}
+.abertura.cartao .login-cartao{opacity:1;translate:0 0}
+.lc-tit{text-align:center;font-size:2.8cqw;font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.lc-sub{text-align:center;font-size:1.3cqw;color:#6e6e73;margin:.5cqw 0 2.2cqw}
+.lc-rot{font-size:1.35cqw;font-weight:500;margin:0 0 .6cqw}
+.lc-campo{position:relative;height:4.2cqw;border-radius:1cqw;background:#fff;border:1px solid #d2d2d7;display:flex;align-items:center;padding:0 1.2cqw;font-size:1.45cqw;margin-bottom:1.6cqw;transition:border-color .2s,box-shadow .2s}
+.lc-campo.foco{border-color:#7c3aed;box-shadow:0 0 0 .35cqw rgb(124 58 237/.22)}
+.lc-ph{color:#a1a1a6;position:absolute;left:1.2cqw}
+.lc-campo.cheio .lc-ph{display:none}
+.lc-txt{white-space:nowrap;overflow:hidden}
+#lc-senha .lc-txt{letter-spacing:.12em;font-size:1.7cqw}
+.lc-cursor{display:none;width:1px;height:2.1cqw;background:#7c3aed;margin-left:1px;animation:pisca 1s steps(1) infinite}
+.lc-campo.foco .lc-cursor{display:block}
+@keyframes pisca{50%{opacity:0}}
+.lc-olho{position:absolute;right:1.2cqw;width:1.9cqw;height:1.9cqw;fill:none;stroke:#6e6e73;stroke-width:2}
+.lc-entrar{height:4cqw;margin-top:1cqw;border-radius:99px;background:#7c3aed;color:#fff;display:grid;place-items:center;font-size:1.5cqw;font-weight:600;transition:transform .35s var(--mola),background-color .2s}
+.lc-entrar.aperta{transform:scale(.96);background:#6d28d9}
+.lc-entrar.carrega span::before{content:"";display:inline-block;width:1.3cqw;height:1.3cqw;margin-right:.8cqw;vertical-align:-.2cqw;border-radius:50%;border:.25cqw solid rgb(255 255 255/.35);border-top-color:#fff;animation:gira .7s linear infinite}
+@keyframes gira{to{transform:rotate(1turn)}}
+#janela-url{transition:opacity .3s}
+.logo-alvo{width:58%;color:#fff}
+.logo-alvo svg{display:block;width:100%;height:auto}
+/* Logo SUPERNOVA animada: a mesma entrada da tela de login do Supernova-suporte (globals.css de lá).
+   Cada peça tem um --passo; o atraso é passo × 110ms. Letras vêm da esquerda; no passo da estrela o anel
+   estala e os raios saem do centro (--dx/--dy os levam ao centro no primeiro quadro; --dist atrasa os mais
+   distantes). Depois da entrada, fica parada. */
+.logo-supernova{--logo-inicio:150ms;--logo-intervalo:110ms;overflow:visible}
+.logo-supernova .logo-letra{transform-box:fill-box;transform-origin:center;animation:logo-letra-entra 520ms cubic-bezier(.34,1.56,.64,1) backwards;animation-delay:calc(var(--logo-inicio) + var(--passo) * var(--logo-intervalo))}
+.logo-supernova .logo-anel{animation:logo-anel-estala 650ms cubic-bezier(.34,1.56,.64,1) backwards;animation-delay:calc(var(--logo-inicio) + var(--passo) * var(--logo-intervalo))}
+.logo-supernova .logo-raio{transform-box:fill-box;transform-origin:center;animation:logo-raio-sai 800ms cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(var(--logo-inicio) + var(--passo) * var(--logo-intervalo) + 120ms + var(--dist) * 2ms)}
+@keyframes logo-letra-entra{from{opacity:0;transform:translateX(-28px) scale(.85)}to{opacity:1;transform:none}}
+@keyframes logo-anel-estala{0%{opacity:0;transform:scale(0)}60%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:none}}
+@keyframes logo-raio-sai{from{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}to{opacity:1;transform:none}}
+@keyframes celular{from{opacity:0;translate:-30px 30px}}
+@keyframes janela{from{opacity:0;translate:0 70px;scale:.96}}
+@media (min-width:961px){
+  .palco{width:calc(100% + 9vw);margin-right:-9vw}
+  .janela{width:90%;border-radius:14px 0 0 14px}
+}
+@media (max-width:960px){
+  .capa{min-height:auto;padding:112px 0 56px}
+  .capa-grade{grid-template-columns:1fr;gap:48px}
+  .capa h1{max-width:13ch}
+}
+
+/* antes e depois */
+.secao{padding:clamp(96px,12vw,168px) 0}
+.secao h2{font-size:clamp(36px,4.4vw,64px);line-height:1.02;letter-spacing:-.04em;font-weight:800;text-wrap:balance;max-width:16ch}
+.secao .intro{font-size:19px;color:var(--tinta-2);margin-top:18px;max-width:46ch;text-wrap:pretty}
+.pares{display:flex;flex-direction:column;gap:clamp(88px,10vw,140px);margin-top:clamp(64px,8vw,104px)}
+.par{display:flex;flex-direction:column;gap:clamp(22px,2.6vw,34px)}
+.par .texto{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(16px,4vw,64px);align-items:end}
+.par h3{font-size:clamp(30px,3.3vw,48px);line-height:1.04;letter-spacing:-.038em;font-weight:800;text-wrap:balance;max-width:18ch}
+.par .texto p{color:var(--tinta-2);max-width:42ch;text-wrap:pretty;padding-bottom:.3em}
+.nota-tela{font-size:13px;color:var(--tinta-3);margin-top:12px}
+@media (max-width:900px){.par .texto{grid-template-columns:1fr}}
+
+.compara{--p:50;--cit:14cqw;position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--grupo);box-shadow:var(--sombra-janela);container-type:inline-size;user-select:none;touch-action:pan-y}
+.compara .depois,.compara .antes{position:absolute;inset:0}
+.compara .depois img{width:100%;height:100%;object-fit:cover;object-position:top left}
+.compara .antes{clip-path:inset(0 calc((100 - var(--p)) * 1%) 0 0);filter:grayscale(1);background:var(--antes)}
+.compara .regua{position:absolute;top:0;bottom:0;left:calc(var(--p) * 1%);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 .5px rgb(0 0 0/.15),0 4px 18px rgb(40 10 90/.3);pointer-events:none}
+.compara .puxador{position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--roxo);color:#fff;display:grid;place-items:center;box-shadow:0 8px 22px -6px rgb(60 20 140/.7),0 0 0 4px rgb(255 255 255/.92);transition:transform .45s var(--mola)}
+.compara:hover .puxador,.compara.ativa .puxador{transform:scale(1.08)}
+.compara input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0;-webkit-appearance:none;appearance:none}
+.compara:has(input:focus-visible) .puxador{outline:3px solid var(--roxo);outline-offset:5px}
+.rotulo{position:absolute;top:2.4cqw;font-size:max(11px,1.25cqw);font-weight:600;padding:.5em 1em;border-radius:99px;pointer-events:none;transition:opacity .3s}
+.rotulo.r-antes{left:2.4cqw;background:#55555b;color:#fff}
+.rotulo.r-depois{right:2.4cqw;background:var(--roxo);color:#fff}
+.compara[data-baixo] .r-antes{opacity:0}.compara[data-alto] .r-depois{opacity:0}
+.compara picture,.compara picture img{display:block;width:100%;height:100%}
+.citacao{position:absolute;z-index:2;left:1.6cqw;top:7.5cqw;width:var(--cit);background:#fff;color:#2f2f33;font-size:max(12px,1.5cqw);line-height:1.3;font-weight:600;letter-spacing:-.015em;padding:.85em 1em;border-radius:1em 1em 1em .3em;box-shadow:0 .8cqw 2cqw -.8cqw rgb(0 0 0/.35),0 0 0 1px #d4d4da}
+@media (max-width:900px){.compara{aspect-ratio:4/5;--cit:28cqw}.citacao{top:14cqw;left:3cqw}.rotulo{top:3cqw}.rotulo.r-antes{left:3cqw}.rotulo.r-depois{right:3cqw}}
+
+/* cenas do "antes": desenhadas, frias, sem cor */
+.cena{position:absolute;inset:0;padding:7.5cqw 4cqw 4cqw;font-size:1.5cqw;color:#5a5a60;overflow:hidden}
+.planilha{background:#fff;border:1px solid var(--antes-fio);border-radius:.6cqw;height:100%;display:flex;flex-direction:column;overflow:hidden}
+.planilha .tit{display:flex;align-items:center;gap:1cqw;padding:1.1cqw 1.4cqw;background:#dcdce1;font-weight:600;font-size:1.35cqw}
+.planilha .tit b{width:1.7cqw;height:1.7cqw;border-radius:.3cqw;background:#7d7d83;display:block}
+.planilha table{border-collapse:collapse;width:100%;font-size:1.45cqw;table-layout:fixed}
+.planilha th,.planilha td{border:1px solid #dedee3;padding:.75cqw 1cqw;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.planilha th{background:#f0f0f3;font-weight:600;color:#6a6a70}
+.planilha td.m{background:#e4e4e8;font-weight:600}
+.planilha td.x{color:#7d7d83;font-style:italic}
+.post{position:absolute;width:19cqw;padding:1.6cqw;background:#d6d6db;color:#3e3e43;font-size:1.7cqw;line-height:1.3;font-weight:600;box-shadow:0 1.2cqw 2cqw -1cqw rgb(0 0 0/.35)}
+.caixa{background:#fff;border:1px solid var(--antes-fio);border-radius:.6cqw;height:100%;overflow:hidden}
+.caixa aside{display:none}
+
+.caixa aside span{display:flex;justify-content:space-between}
+.caixa aside span b{background:#8a8a90;color:#fff;border-radius:99px;padding:0 .8cqw;font-size:1.2cqw}
+.caixa ul{list-style:none}
+.caixa li{display:grid;grid-template-columns:1fr 18% auto;gap:1.4cqw;padding:1.25cqw 1.8cqw;border-bottom:1px solid #e6e6ea;font-size:1.42cqw;align-items:baseline}
+.caixa li b{font-weight:600;color:#45454a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.caixa li span{grid-row:1;grid-column:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.caixa li b{grid-row:1;grid-column:2}
+.caixa li em{grid-row:1;grid-column:3;font-style:normal;color:#7d7d83;font-size:1.25cqw}
+.caixa li.n b,.caixa li.n span{font-weight:700;color:#2f2f33}
+.chat{background:#fff;border:1px solid var(--antes-fio);border-radius:.6cqw;height:100%;display:grid;grid-template-columns:34% 1fr;overflow:hidden}
+.chat .lista{border-right:1px solid #e6e6ea;display:flex;flex-direction:column}
+.chat .lista div{display:grid;grid-template-columns:3.6cqw 1fr auto;gap:1.1cqw;align-items:center;padding:1.15cqw 1.4cqw;border-bottom:1px solid #ececf0}
+.chat .lista i{width:3.6cqw;height:3.6cqw;border-radius:50%;background:#cfcfd4;display:block}
+.chat .lista p{font-size:1.4cqw;line-height:1.25;font-weight:600;color:#45454a;min-width:0}
+.chat .lista p span{display:block;font-weight:400;color:#85858b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat .lista em{font-style:normal;font-size:1.2cqw;font-weight:700;background:#77777d;color:#fff;border-radius:99px;padding:0 .8cqw}
+.chat .conversa{background:#f1f1f4;padding:2cqw;display:flex;flex-direction:column;gap:1.1cqw;justify-content:flex-end}
+.chat .conversa p{max-width:70%;padding:.9cqw 1.3cqw;border-radius:1.2cqw;font-size:1.45cqw;background:#fff;box-shadow:0 1px 0 rgb(0 0 0/.06)}
+.chat .conversa p.eu{align-self:flex-end;background:#dcdce1}
+.login-gen{height:100%;display:flex;align-items:center;padding-left:5cqw;background:#e4e4e9}
+.login-gen .c{width:30cqw;background:#fff;border:1px solid var(--antes-fio);border-radius:.8cqw;padding:3cqw;display:flex;flex-direction:column;gap:1.4cqw}
+.login-gen .logo-x{height:7cqw;border:.25cqw dashed #b0b0b6;border-radius:.6cqw;display:grid;place-items:center;font-weight:700;color:#7d7d83;font-size:1.3cqw;letter-spacing:.08em;white-space:nowrap}
+.login-gen .in{height:3.6cqw;border:1px solid #d6d6db;border-radius:.4cqw;background:#f6f6f8}
+.login-gen .bt{height:3.8cqw;border-radius:.4cqw;background:#8a8a90;color:#fff;display:grid;place-items:center;font-weight:600;font-size:1.5cqw}
+.login-gen small{font-size:1.2cqw;color:#7d7d83;text-align:center}
+
+/* o que vem junto: lista, não cartões */
+.junto{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,80px);align-items:start}
+.modulos{list-style:none;background:var(--janela);border-radius:20px;box-shadow:var(--sombra);overflow:hidden}
+.modulos li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:16px;align-items:center;padding:16px 22px;border-top:1px solid var(--fio)}
+.modulos li:first-child{border-top:0}
+.modulos .ld{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff}
+.modulos b{font-weight:600;letter-spacing:-.015em}
+.modulos span{display:block;color:var(--tinta-2);font-size:15px;line-height:1.4}
+.modulos small{margin-left:8px;font-size:12px;font-weight:600;color:#6d28d9;background:var(--roxo-claro);border-radius:99px;padding:2px 8px;vertical-align:2px}
+.junto .lado p{font-size:19px;color:var(--tinta-2);margin-top:18px;max-width:36ch}
+.menu-real{margin-top:40px;display:flex;align-items:flex-end;gap:22px}
+.menu-real img{width:min(250px,48%);height:auto;border-radius:18px;box-shadow:var(--sombra-janela)}
+.menu-real figcaption{font-size:15px;color:var(--tinta-2);max-width:16ch;padding-bottom:8px}
+@media (max-width:900px){.junto{grid-template-columns:1fr}}
+
+/* dúvidas */
+.duvidas{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,80px);align-items:start}
+.duvidas .perguntas{border-top:1px solid var(--fio)}
+.duvidas details{border-bottom:1px solid var(--fio)}
+.duvidas summary{list-style:none;cursor:pointer;padding:24px 0;font-size:19px;font-weight:600;letter-spacing:-.02em;display:flex;justify-content:space-between;gap:20px;align-items:center;border-radius:6px}
+.duvidas summary::-webkit-details-marker{display:none}
+.duvidas summary .icone{color:var(--tinta-3);transition:rotate .45s var(--mola),color .2s}
+.duvidas details[open] summary .icone{rotate:45deg;color:var(--roxo)}
+.duvidas details p{padding:0 0 26px;color:var(--tinta-2);max-width:60ch}
+@media (max-width:900px){.duvidas{grid-template-columns:1fr}}
+
+/* fechamento */
+.fecho{position:relative;isolation:isolate;overflow:hidden;color:#fff;padding:clamp(110px,13vw,180px) 0}
+.fecho h2{font-size:clamp(40px,5.4vw,80px);line-height:1;letter-spacing:-.04em;font-weight:800;max-width:14ch;text-wrap:balance}
+.fecho p{font-size:clamp(18px,1.5vw,21px);color:rgb(255 255 255/.9);margin-top:22px;max-width:40ch}
+.fecho .acoes{margin-top:38px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+footer{background:#2a1f52;padding:36px 0}
+footer .faixa{display:flex;justify-content:center}
+footer img{height:28px;width:auto}
+
+.toast{position:fixed;left:50%;bottom:24px;translate:-50% 220%;visibility:hidden;z-index:60;background:rgb(250 250 252/.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--sombra-janela);padding:14px 20px;border-radius:999px;font-size:15px;font-weight:500;transition:translate .5s var(--mola);max-width:calc(100% - 32px)}
+.toast.vis{translate:-50% 0;visibility:visible}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-baixo" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-arrasta" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></symbol>
+  <symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-casa" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></symbol>
+  <symbol id="i-alvo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+  <symbol id="i-balao" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+  <symbol id="i-lista" viewBox="0 0 24 24"><path d="M10 6h10M10 12h10M10 18h10M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></symbol>
+  <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-porta" viewBox="0 0 24 24"><path d="M4 21h16M6 21V4h9l3 2v15M12 12h.01"/></symbol>
+  <symbol id="i-carteira" viewBox="0 0 24 24"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7zm0 0 2-3h10M16 14h.01"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <ul>
+    <li><a href="#antes-e-depois">Antes e depois</a></li>
+    <li><a href="#o-que-vem">O que vem junto</a></li>
+    <li><a href="#duvidas">Dúvidas</a></li>
+  </ul>
+  <a class="btn btn-roxo btn-p js-cta" href="#contato">Agendar demonstração</a>
+</header>
+
+<main>
+<section class="capa" id="topo">
+  <div class="ondas" aria-hidden="true"></div>
+  <div class="faixa capa-grade">
+    <div>
+      <h1>Sua empresa ainda vive no WhatsApp do celular?</h1>
+      <p class="apoio">O SUPERNOVA.crm junta conversas, funil de vendas, documentos e cobrança num lugar só. Com a sua marca.</p>
+      <div class="acoes">
+        <a class="btn btn-branco js-cta" href="#contato">Agendar demonstração <svg class="icone"><use href="#i-seta"/></svg></a>
+        <a class="link-seta" href="#antes-e-depois">Ver o antes e depois <svg class="icone"><use href="#i-baixo"/></svg></a>
+      </div>
+    </div>
+    <div class="palco" aria-hidden="true">
+      <div class="celular">
+        <span class="bt bt-acao"></span><span class="bt bt-vol1"></span><span class="bt bt-vol2"></span><span class="bt bt-lig"></span><span class="bt bt-cam"></span>
+        <div class="celular-borda"><div class="celular-tela wa">
+          <div class="cel-ilha"></div>
+          <div class="wa-status"><b id="wa-hora" style="font-weight:700">9:41</b><span class="wa-ind"><svg viewBox="0 0 18 12" style="fill:currentColor;stroke:none"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><svg viewBox="0 0 16 12" style="stroke-width:2.2"><path d="M1 4.5a10 10 0 0 1 14 0M3.6 7.2a6.2 6.2 0 0 1 8.8 0M6.2 9.8a2.4 2.4 0 0 1 3.6 0"/></svg><span class="wa-bat">76</span></span></div>
+          <div class="wa-acoes"><span class="wa-bt"><svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></span><div><span class="wa-bt"><svg viewBox="0 0 24 24"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6H7l1.5-2h7L17 6h1.5A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.5"/></svg></span><span class="wa-bt verde"><svg viewBox="0 0 24 24" style="stroke-width:2.6"><path d="M12 5v14M5 12h14"/></svg></span></div></div>
+          <div class="wa-chips"><span>Todas</span><span>Não lidas <em id="wa-naolidas">47</em></span><span>Favoritos</span><span>Grupos <em>3</em></span></div>
+          <ul class="wa-lista" id="wa-lista"><li><i class="wa-av" style="background:#5b6cf0">EV</i><div><p class="wa-l"><b>Equipe vendas</b><time class="nova">9:38</time></p><p class="wa-l"><span>~Bruno: quem ficou com a Karina?</span><em>28</em></p></div></li><li><i class="wa-av" style="background:#e0752d">GA</i><div><p class="wa-l"><b>Gabriela Alves</b><time class="nova">9:21</time></p><p class="wa-l"><span>Mandei o comprovante ontem</span><em>12</em></p></div></li><li><i class="wa-av" style="background:#2a9d8f">RM</i><div><p class="wa-l"><b>Rodrigo Martins</b><time class="nova">9:05</time></p><p class="wa-l"><span>Vocês ainda têm horário?</span><em>3</em></p></div></li><li><i class="wa-av" style="background:#8e8e93">+55</i><div><p class="wa-l"><b>+55 41 99252-4765</b><time class="nova">8:47</time></p><p class="wa-l"><span>Oi, tudo bem? Vi o anúncio</span><em>1</em></p></div></li><li><i class="wa-av" style="background:#c2417a">TB</i><div><p class="wa-l"><b>Tatiana Barbosa</b><time>8:12</time></p><p class="wa-l"><span><svg viewBox="0 0 18 11"><path d="M1 6l3.5 3.5L11 2M7 9.5 14.5 2"/></svg>Te mando a proposta hoje</span></p></div></li><li><i class="wa-av" style="background:#6d4bd1">LA</i><div><p class="wa-l"><b>Lucas Alves</b><time>Ontem</time></p><p class="wa-l"><span>Áudio (0:47)</span><em>2</em></p></div></li><li><i class="wa-av" style="background:#3b82c4">DC</i><div><p class="wa-l"><b>Daniel Carvalho</b><time>Ontem</time></p><p class="wa-l"><span>Ainda estou esperando…</span></p></div></li></ul>
+          <div class="wa-tab"><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></svg>Atualizações</span><span><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Ligações<em>10</em></span><span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0M1.5 18a3.6 3.6 0 0 1 5-3.2M22.5 18a3.6 3.6 0 0 0-5-3.2"/></svg>Comunidades</span><span class="on"><svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M12 3c5 0 9 3.4 9 7.6s-4 7.6-9 7.6c-1 0-2-.1-2.9-.4L5 20l.9-3.6C4.1 15 3 12.9 3 10.6 3 6.4 7 3 12 3z"/></svg>Conversas<em id="wa-aba">47</em></span><span><i class="eu"></i>Você</span></div>
+        </div></div>
+      </div>
+      <div class="janela">
+        <div class="janela-barra"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span id="janela-url">crm.suaempresa.com.br</span></div>
+        <div class="telas" id="telas">
+          <div class="abertura on" id="login">
+            <div class="universo" id="ceu"></div>
+            <div class="login-col">
+              <div class="logo-alvo" id="login-logo"></div>
+              <div class="login-cartao">
+                <p class="lc-tit">Sua Empresa</p>
+                <p class="lc-sub">Entre com a sua conta da equipe.</p>
+                <p class="lc-rot">E-mail</p>
+                <div class="lc-campo" id="lc-email"><span class="lc-ph">voce@empresa.com.br</span><span class="lc-txt"></span><i class="lc-cursor"></i></div>
+                <p class="lc-rot">Senha</p>
+                <div class="lc-campo" id="lc-senha"><span class="lc-txt"></span><i class="lc-cursor"></i><svg class="lc-olho" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                <div class="lc-entrar" id="lc-entrar"><span>Entrar</span></div>
+              </div>
+            </div>
+          </div>
+          <img class="t" data-rota="/" src="assets/telas/capa-inicio.webp" width="1920" height="918" alt="">
+          <img class="t" data-rota="/empresas" src="assets/telas/capa-empresas.webp" width="1920" height="918" alt="" loading="lazy">
+          <img class="t" data-rota="/cofre" src="assets/telas/capa-cofre.webp" width="1920" height="918" alt="" loading="lazy">
+          <img class="t" data-rota="/leads" src="assets/telas/capa-leads.webp" width="1920" height="918" alt="" loading="lazy">
+          <img class="t" data-rota="/oportunidades" src="assets/telas/capa-oportunidades.webp" width="1920" height="918" alt="">
+          <img class="t" data-rota="/configuracoes/marca" src="assets/telas/capa-marca.webp" width="1920" height="918" alt="" loading="lazy">
+          <div class="cursor-fake" id="cursor" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.4-4.1 2.8 6.3 3-1.3-2.8-6.2 6-.4z"/></svg><i></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="antes-e-depois">
+  <div class="faixa">
+    <h2>O que muda no dia da sua equipe.</h2>
+    <p class="intro">Arraste a régua de cada tela. À esquerda, como costuma ser. À direita, o SUPERNOVA.crm de verdade.</p>
+
+    <div class="pares">
+      <article class="par">
+        <div class="texto">
+          <h3>Cada venda com etapa, valor e responsável.</h3>
+          <p>O funil mostra onde cada oportunidade está e quem conduz. Ninguém precisa perguntar no grupo.</p>
+        </div>
+        <div>
+          <div class="compara" data-compara data-r="24" data-rm="32">
+            <div class="depois"><picture><source media="(max-width:900px)" srcset="assets/telas/m-oportunidades.webp" width="816" height="1020"><img src="assets/telas/par-oportunidades.webp" width="1520" height="855" loading="lazy" alt="Tela de Oportunidades do SUPERNOVA.crm: funil com as colunas Novo, Proposta enviada, Em negociação, Follow-up, Fechado e Perdido, cada card com cliente, valor e responsável."></picture></div>
+            <div class="antes" aria-hidden="true">
+              <p class="citacao">“Quem ficou de ligar para a Karina?”</p>
+              <div class="cena">
+                <div class="planilha">
+                  <div class="tit"><b></b>clientes_2026_FINAL (3).xlsx</div>
+                  <table>
+                    <thead><tr><th style="width:28%">Cliente</th><th>Status</th><th style="width:15%">Valor</th><th style="width:20%">Quem?</th></tr></thead>
+                    <tbody>
+                      <tr><td>Karina (Tech Store)</td><td class="m">ligar dps</td><td>500?</td><td class="x">??</td></tr>
+                      <tr><td>Mariana Souza</td><td>mandou proposta?</td><td></td><td>acho que o Bruno</td></tr>
+                      <tr><td>Rodrigo - Café Especial</td><td class="m">FECHADO (confirmar)</td><td>7.520</td><td>Ana</td></tr>
+                      <tr><td>Tatiana</td><td class="x">ver com financeiro</td><td></td><td></td></tr>
+                      <tr><td>Henrique Mundo Geek</td><td>esperando retorno</td><td>4,3 mil</td><td class="x">ninguém</td></tr>
+                      <tr><td>Lucas Arte Papel</td><td class="m">perdido??</td><td>7.553</td><td>Bruno</td></tr>
+                      <tr><td>Gabriela Alves</td><td>ligou de novo</td><td></td><td class="x">??</td></tr>
+                      <tr><td>Daniel - Verde Natural</td><td>pediu desconto</td><td>valor?</td><td>Ana</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="post" style="right:6cqw;bottom:5cqw;rotate:3deg">ligar Karina amanhã!! (ou hoje?)</div>
+              </div>
+            </div>
+            <span class="rotulo r-antes">Antes</span><span class="rotulo r-depois">Com o SUPERNOVA.crm</span>
+            <input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois: funil de vendas">
+            <div class="regua"><span class="puxador"><svg class="icone"><use href="#i-arrasta"/></svg></span></div>
+          </div>
+          <p class="nota-tela">Tela real do CRM, com dados de demonstração.</p>
+        </div>
+      </article>
+
+      <article class="par">
+        <div class="texto">
+          <h3>Todo contato entra com origem e dono.</h3>
+          <p>Instagram, site, indicação ou WhatsApp oficial da Meta, onde a IA responde primeiro e passa a conversa inteira para a equipe.</p>
+        </div>
+        <div>
+          <div class="compara" data-compara data-r="24" data-rm="32">
+            <div class="depois"><picture><source media="(max-width:900px)" srcset="assets/telas/m-leads.webp" width="816" height="1020"><img src="assets/telas/par-leads.webp" width="1520" height="855" loading="lazy" alt="Tela de Leads do SUPERNOVA.crm: lista de pessoas com origem, situação, responsável e data de entrada."></picture></div>
+            <div class="antes" aria-hidden="true">
+              <p class="citacao">“Esse cliente veio do Instagram ou foi indicação?”</p>
+              <div class="cena">
+                <div class="chat">
+                  <div class="lista">
+                    <div><i></i><p>Rodrigo Martins<span>Vi no Instagram, quanto custa?</span></p><em>3</em></div>
+                    <div><i></i><p>Rafaela Santos<span>Quem me indicou foi a Tati</span></p><em>5</em></div>
+                    <div><i></i><p>+55 41 9252-4765<span>Oi, tudo bem?</span></p><em>1</em></div>
+                    <div><i></i><p>Equipe vendas<span>Bruno: esse é meu</span></p><em>28</em></div>
+                    <div><i></i><p>Gabriela Carvalho<span>Ainda estou esperando</span></p><em>7</em></div>
+                    <div><i></i><p>Vinícius Costa<span>Preenchi o formulário</span></p><em>2</em></div>
+                    <div><i></i><p>Karina Gomes<span>Áudio · 1:12</span></p><em>1</em></div>
+                  </div>
+                  <div class="conversa">
+                    <p>Bom dia! Vocês atendem empresa pequena?</p>
+                    <p>Falei com alguém semana passada, mas ninguém retornou</p>
+                    <p class="eu">Oi! Com quem você falou?</p>
+                    <p>Não lembro o nome</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="rotulo r-antes">Antes</span><span class="rotulo r-depois">Com o SUPERNOVA.crm</span>
+            <input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois: entrada de contatos">
+            <div class="regua"><span class="puxador"><svg class="icone"><use href="#i-arrasta"/></svg></span></div>
+          </div>
+          <p class="nota-tela">Tela real do CRM, com dados de demonstração.</p>
+        </div>
+      </article>
+
+      <article class="par">
+        <div class="texto">
+          <h3>Os documentos de cada cliente numa pasta só.</h3>
+          <p>Cofre cifrado por empresa. O cliente envia os arquivos pelo Portal do Cliente, e tudo fica registrado.</p>
+        </div>
+        <div>
+          <div class="compara" data-compara data-r="24" data-rm="32">
+            <div class="depois"><picture><source media="(max-width:900px)" srcset="assets/telas/m-cofre.webp" width="816" height="1020"><img src="assets/telas/par-cofre.webp" width="1520" height="855" loading="lazy" alt="Tela do Cofre do SUPERNOVA.crm: uma pasta por empresa cliente, com CNPJ, data de publicação e quantidade de itens."></picture></div>
+            <div class="antes" aria-hidden="true">
+              <p class="citacao">“Pode mandar o contrato social de novo?”</p>
+              <div class="cena">
+                <div class="caixa">
+                  <aside><span>Entrada <b>214</b></span><span>Enviados</span><span>Rascunhos <b>9</b></span><span>Spam</span></aside>
+                  <ul>
+                    <li class="n"><b>Doce Encanto</b><span>RE: RE: FWD: contrato social (2).pdf</span><em>09:12</em></li>
+                    <li class="n"><b>Fit Suplementos</b><span>Documentos que faltam??</span><em>08:47</em></li>
+                    <li><b>Casa &amp; Estilo</b><span>Segue em anexo (versão certa agora)</span><em>ontem</em></li>
+                    <li class="n"><b>Arte Papel</b><span>Vocês receberam o certificado?</span><em>ontem</em></li>
+                    <li><b>Café Especial</b><span>FW: comprovante_final_v2.jpg</span><em>seg</em></li>
+                    <li><b>Jardim Secreto</b><span>reenviando o que pediram</span><em>seg</em></li>
+                    <li class="n"><b>Bella Cosméticos</b><span>Não estou achando o arquivo que mandei</span><em>sex</em></li>
+                    <li><b>Livraria Página</b><span>RE: procuração</span><em>sex</em></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <span class="rotulo r-antes">Antes</span><span class="rotulo r-depois">Com o SUPERNOVA.crm</span>
+            <input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois: documentos dos clientes">
+            <div class="regua"><span class="puxador"><svg class="icone"><use href="#i-arrasta"/></svg></span></div>
+          </div>
+          <p class="nota-tela">Tela real do CRM, com dados de demonstração.</p>
+        </div>
+      </article>
+
+      <article class="par">
+        <div class="texto">
+          <h3>Seus clientes veem a sua marca. Não a nossa.</h3>
+          <p>Nome, cor, logo e capa da sua empresa no CRM, na tela de entrada e no Portal do Cliente. Você mesmo troca, sem esperar desenvolvimento.</p>
+        </div>
+        <div>
+          <div class="compara" data-compara data-r="76" data-rm="32">
+            <div class="depois"><picture><source media="(max-width:900px)" srcset="assets/telas/m-marca.webp" width="816" height="1020"><img src="assets/telas/par-marca.webp" width="1670" height="939" loading="lazy" alt="Tela de Marca do SUPERNOVA.crm: nome comercial, cor da marca, cor dos botões, fundos das entradas, logo e capa, com prévia ao lado."></picture></div>
+            <div class="antes" aria-hidden="true">
+              <p class="citacao">“Que sistema é esse que vocês usam?”</p>
+              <div class="cena" style="padding:0">
+                <div class="login-gen">
+                  <div class="c">
+                    <div class="logo-x">LOGO DO FORNECEDOR</div>
+                    <div class="in"></div><div class="in"></div>
+                    <div class="bt">Entrar</div>
+                    <small>Sistema de Gestão v3.2 · marca do fornecedor</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="rotulo r-antes">Antes</span><span class="rotulo r-depois">Com o SUPERNOVA.crm</span>
+            <input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois: marca da empresa">
+            <div class="regua"><span class="puxador"><svg class="icone"><use href="#i-arrasta"/></svg></span></div>
+          </div>
+          <p class="nota-tela">Tela real do CRM, com dados de demonstração.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="o-que-vem" style="background:var(--grupo);padding-block:clamp(88px,10vw,140px)">
+  <div class="faixa junto">
+    <div class="lado">
+      <h2>Ligue só o que a sua empresa usa.</h2>
+      <p>Cada módulo liga e desliga. Desligado, some do menu, e nada é apagado. Tudo no navegador, no endereço da sua empresa.</p>
+      <figure class="menu-real">
+        <img src="assets/telas/menu.webp" width="250" height="560" loading="lazy" alt="Menu lateral do SUPERNOVA.crm: Início, Meu dia, Empresas, Cofre, Acessos, Tarefas, Timeline, e no Comercial, Atendimentos, Leads e Oportunidades, cada um com seu ícone colorido.">
+        <figcaption>O menu de verdade: mostra só os módulos ligados.</figcaption>
+      </figure>
+    </div>
+    <ul class="modulos">
+      <li><span class="ld" style="background:#6b6b70"><svg class="icone"><use href="#i-casa"/></svg></span><p><b>Núcleo</b><span>Início, Meu dia, pessoas, empresas, linha do tempo que ninguém edita nem apaga, usuários e auditoria</span></p></li>
+      <li><span class="ld" style="background:#5856d6"><svg class="icone"><use href="#i-alvo"/></svg></span><p><b>Comercial</b><span>Leads, funil com as suas etapas, proposta, acordo e follow-up</span></p></li>
+      <li><span class="ld" style="background:#23964a"><svg class="icone"><use href="#i-balao"/></svg></span><p><b>Atendimento</b><span>WhatsApp oficial da Meta, tickets, tempo de resposta, satisfação e IA</span></p></li>
+      <li><span class="ld" style="background:#1a86ad"><svg class="icone"><use href="#i-lista"/></svg></span><p><b>Tarefas</b><span>Quadros, Gantt, views salvas, notificações e automação</span></p></li>
+      <li><span class="ld" style="background:#0f8a82"><svg class="icone"><use href="#i-cadeado"/></svg></span><p><b>Cofre</b><span>Documentos e acessos de cada cliente, cifrados</span></p></li>
+      <li><span class="ld" style="background:#8e44c4"><svg class="icone"><use href="#i-porta"/></svg></span><p><b>Portal do Cliente</b><span>O cliente acompanha o contratado, envia arquivos e abre suporte</span></p></li>
+      <li><span class="ld" style="background:#d63864"><svg class="icone"><use href="#i-carteira"/></svg></span><p><b>Cobrança</b><span>Acordos e cobranças pelo Asaas; o pagamento confirmado libera a venda</span></p></li>
+      <li><span class="ld" style="background:#b8730a"><svg class="icone"><use href="#i-calc"/></svg></span><p><b>Operação contábil</b><small>opcional</small><span>Para contabilidades: XML de notas, certificado A1, ficha fiscal e certidões</span></p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="secao" id="duvidas">
+  <div class="faixa duvidas">
+    <h2>Dúvidas comuns.</h2>
+    <div class="perguntas">
+      <details><summary>Preciso instalar alguma coisa?<svg class="icone"><use href="#i-mais"/></svg></summary><p>Não. O CRM abre no navegador, num endereço com o nome da sua empresa. Cada pessoa da equipe tem o próprio login, com e-mail, senha e verificação em duas etapas. Você pode usar as funções prontas, como comercial, atendimento e financeiro, ou criar as suas. Cada pessoa vê e faz só o que a função dela permite. Tudo o que cada um faz fica registrado na auditoria.</p></details>
+      <details><summary>O WhatsApp é o oficial?<svg class="icone"><use href="#i-mais"/></svg></summary><p>Sim, pela API oficial da Meta. O atendimento é conversa a conversa, sem disparo em massa. Pela regra da Meta, depois de 24 horas sem mensagem do cliente, a conversa volta quando ele escrever de novo.</p></details>
+      <details><summary>Serve para o meu tipo de empresa?<svg class="icone"><use href="#i-mais"/></svg></summary><p>Serve. O SUPERNOVA.crm se adapta a qualquer negócio que atende e vende para clientes: escritório, clínica, agência, imobiliária, loja, consultoria ou o que for o seu. O funil tem as etapas que você definir, as listas e os campos são os da sua empresa, e você liga só os módulos que usa. Para contabilidades, ainda existe um módulo de operação contábil.</p></details>
+      <details><summary>Quanto custa?<svg class="icone"><use href="#i-mais"/></svg></summary><p>O valor sai na conversa da demonstração.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="fecho" id="contato">
+  <div class="ondas" aria-hidden="true"></div>
+  <div class="faixa">
+    <h2>Veja o SUPERNOVA.crm com a cara da sua empresa.</h2>
+    <p>Numa conversa rápida, mostramos o CRM com a sua marca e os módulos que fazem sentido para o seu negócio.</p>
+    <div class="acoes">
+      <a class="btn btn-branco js-cta" href="#contato"><svg class="icone"><use href="#i-zap"/></svg> Agendar pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <a href="#topo" class="faixa" aria-label="SUPERNOVA.crm, voltar ao topo"><img src="assets/supernova-branco.png" alt="SUPERNOVA.crm" width="200" height="28"></a>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/universo.js"></script>
+<script src="assets/ondas.js"></script>
+<script>
+/* ===== Contato: preencha antes de publicar ===== */
+const CONTATO = {
+  whatsapp: "5531983331046",   // +55 31 98333-1046 (só números, com DDI e DDD)
+  mensagem: "Olá! Quero agendar uma demonstração do SUPERNOVA.crm."
+};
+
+const calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* Todos os botões de ação levam ao WhatsApp configurado. Sem número, o do fechamento avisa. */
+const toast = document.getElementById("toast");
+let toastT;
+document.querySelectorAll(".js-cta").forEach(a => {
+  if (CONTATO.whatsapp) {
+    a.href = `https://wa.me/${CONTATO.whatsapp}?text=${encodeURIComponent(CONTATO.mensagem)}`;
+    a.target = "_blank"; a.rel = "noopener";
+  } else if (a.closest("#contato")) {
+    a.addEventListener("click", e => {
+      e.preventDefault();
+      toast.textContent = "O WhatsApp de contato ainda não foi configurado.";
+      toast.classList.add("vis"); clearTimeout(toastT);
+      toastT = setTimeout(() => toast.classList.remove("vis"), 3000);
+    });
+  }
+});
+
+/* Navegação: vidro claro fora das áreas roxas. */
+const nav = document.getElementById("nav");
+const roxas = [document.getElementById("topo"), document.getElementById("contato")];
+function pintarNav() {
+  const meio = nav.getBoundingClientRect().top + 30;
+  nav.classList.toggle("solida", !roxas.some(s => { const r = s.getBoundingClientRect(); return r.top <= meio && r.bottom >= meio; }));
+}
+addEventListener("scroll", pintarNav, { passive: true }); pintarNav();
+
+/* Janela da abertura: o login do produto (logo animada, e-mail e senha digitados, Entrar) e,
+   depois de entrar, as telas reais em sequência. No fim do ciclo, volta ao login. */
+(() => {
+  const login = document.getElementById("login"), url = document.getElementById("janela-url");
+  const telas = [...document.querySelectorAll("#telas > img.t")];
+  const email = document.getElementById("lc-email"), senha = document.getElementById("lc-senha"), entrar = document.getElementById("lc-entrar");
+  const logo = document.getElementById("login-logo");
+  const ceu = document.getElementById("ceu");
+  const espera = ms => new Promise(r => setTimeout(r, ms));
+  const mostrar = el => {
+    [login, ...telas].forEach(q => q.classList.toggle("on", q === el));
+    url.style.opacity = 0;
+    setTimeout(() => { const rota = el === login ? "/login" : el.dataset.rota; url.textContent = "crm.suaempresa.com.br" + (rota && rota !== "/" ? rota : ""); url.style.opacity = 1; }, 300);
+  };
+  const digitar = async (campo, texto, ms) => {
+    const t = campo.querySelector(".lc-txt"); campo.classList.add("foco", "cheio");
+    for (const ch of texto) { t.textContent += ch; await espera(ms + Math.random() * ms * .6); }
+    await espera(260); campo.classList.remove("foco");
+  };
+  const limpar = () => {
+    [email, senha].forEach(c => { c.querySelector(".lc-txt").textContent = ""; c.classList.remove("foco", "cheio"); });
+    entrar.classList.remove("aperta", "carrega"); entrar.querySelector("span").textContent = "Entrar";
+    login.classList.remove("cartao");
+    logo.innerHTML = window.LOGO_SUPERNOVA_SVG || "";
+    if (window.montarUniverso) window.montarUniverso(ceu, calmo ? 0 : 1.9);
+  };
+  if (calmo) {
+    logo.innerHTML = window.LOGO_SUPERNOVA_SVG || ""; if (window.montarUniverso) window.montarUniverso(ceu, 0); login.classList.add("cartao");
+    email.classList.add("cheio"); email.querySelector(".lc-txt").textContent = "ana.souza@suaempresa.com.br";
+    senha.classList.add("cheio"); senha.querySelector(".lc-txt").textContent = "••••••••••";
+    return;
+  }
+  const cursor = document.getElementById("cursor"), quadro = document.getElementById("telas");
+  const tela = rota => telas.find(t => t.dataset.rota === rota);
+  /* Posição em % do quadro (as telas são 1920x918; o menu lateral fica em x≈90). */
+  const ir = async (x, y, ms = 800) => { cursor.style.left = x + "%"; cursor.style.top = y + "%"; await espera(ms); };
+  const irPara = async el => { const q = quadro.getBoundingClientRect(), r = el.getBoundingClientRect(); await ir(((r.left + r.width * .5 - q.left) / q.width) * 100, ((r.top + r.height * .55 - q.top) / q.height) * 100); };
+  const clicar = async () => { cursor.classList.remove("clica"); void cursor.offsetWidth; cursor.classList.add("clica"); await espera(220); };
+  const menu = y => (y - 62) / 918 * 100;
+  (async function ciclo() {
+    for (;;) {
+      limpar(); mostrar(login); cursor.style.transition = "none"; cursor.style.left = "58%"; cursor.style.top = "108%"; void cursor.offsetWidth; cursor.style.transition = "";
+      await espera(1900); login.classList.add("cartao");
+      await espera(500); await irPara(email); await clicar();
+      await digitar(email, "ana.souza@suaempresa.com.br", 45);
+      await irPara(senha); await clicar();
+      await digitar(senha, "••••••••••", 70);
+      await irPara(entrar); await clicar(); entrar.classList.add("aperta"); await espera(160);
+      entrar.classList.remove("aperta"); entrar.classList.add("carrega"); entrar.querySelector("span").textContent = "Entrando…";
+      await espera(900);
+      mostrar(tela("/")); await ir(46, 40, 900); await espera(900);
+      await ir(4.6, menu(160)); await clicar(); mostrar(tela("/empresas")); await espera(500);
+      await ir(26, 52, 900); await espera(700);
+      await ir(4.2, menu(198)); await clicar(); mostrar(tela("/cofre")); await espera(500);
+      await ir(16, 46, 900); await espera(700);
+      await ir(4.8, menu(360)); await clicar(); mostrar(tela("/leads")); await espera(500);
+      await ir(17, 37, 900); await espera(700);
+      await ir(6.4, menu(468)); await clicar(); mostrar(tela("/oportunidades")); await espera(500);
+      await ir(20, 47, 900); await espera(500); await ir(35, 47, 700); await espera(700);
+      await ir(5.6, menu(559)); await clicar(); mostrar(tela("/configuracoes/marca")); await espera(500);
+      await ir(88, 46, 900); await espera(1600);
+    }
+  })();
+})();
+
+/* Celular: mensagens chegando sem parar, como no WhatsApp de quem ainda atende pelo celular (contatos fictícios). */
+(() => {
+  const lista = document.getElementById("wa-lista"); if (!lista || calmo) return;
+  const hora = document.getElementById("wa-hora"), naoLidas = document.getElementById("wa-naolidas"), aba = document.getElementById("wa-aba");
+  const novos = [
+    ["CE", "#0f8a82", "Café Especial"], ["MS", "#d97706", "Mariana Souza"], ["+55", "#8e8e93", "+55 11 98431-2277"],
+    ["PR", "#be185d", "Paulo Rodrigues"], ["IS", "#4f46e5", "Isabela Silva"], ["+55", "#8e8e93", "+55 21 99702-1180"],
+  ];
+  const textos = [
+    "Alguém pode me responder?", "Qual o valor do plano?", "Mandei o documento por e-mail", "Oi, boa tarde!", "Ainda tem vaga essa semana?",
+    "Vocês emitem nota?", "Áudio (0:32)", "Preciso falar com o responsável", "Já paguei, cadê o recibo?", "Podemos marcar uma reunião?",
+    "Esqueceram de mim? 😅", "Vi o anúncio no Instagram", "Quem está cuidando do meu pedido?", "Pode me ligar agora?",
+  ];
+  let minuto = 41, total = 47, n = 0;
+  const h = () => "9:" + String(minuto).padStart(2, "0");
+  const flip = muda => {
+    const itens = [...lista.children], antes = new Map(itens.map(li => [li, li.getBoundingClientRect().top]));
+    muda();
+    [...lista.children].forEach(li => {
+      const a = antes.get(li); if (a === undefined) return;
+      const d = a - li.getBoundingClientRect().top;
+      if (d) li.animate([{ transform: `translateY(${d}px)` }, { transform: "none" }], { duration: 420, easing: "cubic-bezier(.2,.8,.2,1)" });
+    });
+  };
+  const chegar = () => {
+    n++; if (n % 2 === 0 && minuto < 59) { minuto++; hora.textContent = h(); }
+    total++; naoLidas.textContent = total; aba.textContent = total;
+    const texto = textos[Math.floor(Math.random() * textos.length)];
+    let li;
+    if (n % 4 === 0) {
+      const [ini, cor, nome] = novos[(n / 4 - 1) % novos.length];
+      li = document.createElement("li");
+      li.innerHTML = `<i class="wa-av" style="background:${cor}">${ini}</i><div><p class="wa-l"><b>${nome}</b><time></time></p><p class="wa-l"><span></span></p></div>`;
+    } else {
+      const itens = [...lista.children].slice(1);
+      li = itens[Math.floor(Math.random() * itens.length)];
+    }
+    li.querySelector("time").textContent = h(); li.querySelector("time").className = "nova";
+    li.querySelector("p.wa-l:last-child span").textContent = texto;
+    let em = li.querySelector("em");
+    if (!em) { em = document.createElement("em"); li.querySelector("p.wa-l:last-child").append(em); em.textContent = "0"; }
+    em.textContent = String(+em.textContent + 1);
+    flip(() => { lista.prepend(li); while (lista.children.length > 7) lista.lastElementChild.remove(); });
+    li.classList.remove("chegou"); void li.offsetWidth; li.classList.add("chegou");
+    if (!li.isConnected) return;
+    if (minuto >= 59) minuto = 40;
+  };
+  (function ciclo() { setTimeout(() => { chegar(); ciclo(); }, 2200 + Math.random() * 1400); })();
+})();
+
+/* Antes e depois: a régua entra uma vez, varrendo do "antes" para o "depois". */
+document.querySelectorAll("[data-compara]").forEach(el => {
+  const input = el.querySelector("input");
+  let mexeu = false;
+  const pintar = v => {
+    el.style.setProperty("--p", v);
+    el.toggleAttribute("data-baixo", v < 14);
+    el.toggleAttribute("data-alto", v > 86);
+  };
+  input.addEventListener("input", () => { mexeu = true; pintar(+input.value); });
+  input.addEventListener("pointerdown", () => { mexeu = true; el.classList.add("ativa"); });
+  addEventListener("pointerup", () => el.classList.remove("ativa"));
+  const repouso = +(matchMedia("(max-width:900px)").matches ? el.dataset.rm : el.dataset.r);
+  if (calmo) { input.value = repouso; pintar(repouso); return; }
+  input.value = 96; pintar(96);
+  const io = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    const de = 96, ate = repouso, dur = 1400;
+    setTimeout(() => {
+      const ini = performance.now();
+      const passo = t => {
+        if (mexeu) return;
+        const k = Math.min(1, (t - ini) / dur), q = k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
+        const v = de + (ate - de) * q;
+        input.value = v; pintar(v);
+        if (k < 1) requestAnimationFrame(passo);
+      };
+      requestAnimationFrame(passo);
+    }, 250);
+  }, { threshold: .55 });
+  io.observe(el);
+});
+</script>
+</body>
+</html>
